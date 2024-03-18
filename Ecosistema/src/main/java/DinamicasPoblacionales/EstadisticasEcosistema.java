@@ -8,7 +8,6 @@ public class EstadisticasEcosistema {
     public static void mostrarEstadisticas(List<Organismo> organismos) {
         int cantidadAnimales = 0;
         int cantidadPlantas = 0;
-        int cantidadHongos = 0;
         for (Organismo organismo : organismos) {
             if (organismo instanceof Animales) {
                 cantidadAnimales++;

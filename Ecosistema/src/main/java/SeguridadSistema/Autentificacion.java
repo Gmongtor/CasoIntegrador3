@@ -2,10 +2,10 @@ package SeguridadSistema;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Autenticacion {
+public class Autentificacion {
     private Map<String, String> usuarios = new HashMap<>();
 
-    public Autenticacion() {
+    public Autentificacion() {
         // Ejemplo de usuario predeterminado, en práctica usa contraseñas cifradas
         usuarios.put("investigador", "12345");
     }

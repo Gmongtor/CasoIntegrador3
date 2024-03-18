@@ -25,9 +25,9 @@ public class SimuladorEcosistema {
         for (Organismo organismo : new ArrayList<>(organismos)) {
             organismo.envejecer();
             organismo.mover();
-            // Asumimos que reproducirse ahora correctamente maneja la lógica interna y puede agregar nuevos organismos
-            if (random.nextDouble() < 0.1) { // Supongamos una probabilidad de 10% de reproducción
-                Organismo nuevoOrganismo = organismo; // Ajustar según la implementación real
+
+            if (random.nextDouble() < 0.1) {
+                Organismo nuevoOrganismo = organismo;
                 if (nuevoOrganismo != null) {
                     nuevosOrganismos.add(nuevoOrganismo);
                 }
@@ -35,7 +35,7 @@ public class SimuladorEcosistema {
         }
         organismos.addAll(nuevosOrganismos);
 
-        // Corrección: Pasar la lista de organismos a aplicarEvento para manejar la reducción de la población
+        // Aplicar un evento aleatorio
         if (random.nextBoolean()) {
             EventoAleatorio.aplicarEvento(ambiente, organismos);
         }
@@ -47,6 +47,8 @@ public class SimuladorEcosistema {
         }
         EstadisticasEcosistema.mostrarEstadisticas(organismos);
     }
+
 }
+
 
 

@@ -5,7 +5,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GestorAutenticacion {
+public class GestorAutentificacion {
     private Map<String, Usuario> usuariosRegistrados = new HashMap<>();
 
     public boolean iniciarSesion(String nombreUsuario, String contraseña) {

@@ -20,9 +20,7 @@ public abstract class Organismo {
     public abstract void reproducirse(Organismo pareja);
     public abstract void envejecer();
 
-    // Getters y setters
-    // Estos métodos permiten acceder y modificar los atributos de los organismos.
-    // La documentación de cada método proporciona información clara sobre su propósito.
+
 
     public int getPosX() { return posX; }
     public void setPosX(int posX) { this.posX = posX; }

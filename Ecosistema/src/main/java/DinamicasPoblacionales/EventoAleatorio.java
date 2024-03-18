@@ -46,7 +46,14 @@ public class EventoAleatorio {
         System.out.println("Ha ocurrido un brote de enfermedad.");
         reducirPoblacion(organismos, 0.2); // Reduce la población en un 20%
     }
-
+    private static void cambiarClima(Ambiente ambiente) {
+        // Aquí se debería cambiar el estado del clima en el objeto ambiente.
+        // Por simplicidad, asumimos que ambiente tiene un método setClima(String clima).
+        String[] climasPosibles = {"Soleado", "Lluvioso", "Nublado", "Ventoso"};
+        String nuevoClima = climasPosibles[random.nextInt(climasPosibles.length)];
+        ambiente.setClima(nuevoClima);
+        System.out.println("El clima ha cambiado a: " + nuevoClima);
+    }
 
     // Método para reducir la población basado en un porcentaje
     private static void reducirPoblacion(List<Organismo> organismos, double porcentaje) {

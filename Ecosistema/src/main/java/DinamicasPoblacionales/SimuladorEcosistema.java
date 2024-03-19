@@ -24,8 +24,13 @@ public class SimuladorEcosistema {
     }
 
     private void inicializarEcosistema() {
-        agregarOrganismo(new Animales(10, 10, 100, 5, true, 8, 100, "León"));
-        agregarOrganismo(new Planta(5, 5, 100, 1, true, 1.5));
+        organismos.add(new Animales(0, 0, 100, 5, true, 1.5, 100, "León"));
+        organismos.add(new Animales(5, 5, 100, 10, true, 1.2, 100, "Tigre"));
+        organismos.add(new Animales(10, 10, 100, 15, true, 1.0, 100, "Elefante"));
+
+        organismos.add(new Planta(10, 10, 100, 5, true, 0.2, "Roble"));
+        organismos.add(new Planta(15, 15, 100, 10, true, 0.3, "Pino"));
+        organismos.add(new Planta(20, 20, 100, 15, true, 0.4, "Cedro"));
     }
 
     public void agregarOrganismo(Organismo organismo) {

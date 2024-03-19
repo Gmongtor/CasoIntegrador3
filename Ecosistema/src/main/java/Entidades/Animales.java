@@ -1,9 +1,11 @@
 package Entidades;
+
 import java.util.Random;
 
 public class Animales extends Organismo {
-    private double velocidadMovimiento; // Velocidad a la que el animal puede moverse
-    private double energia; // Energía actual del animal, afecta su capacidad de moverse y reproducirse
+    private double velocidadMovimiento;
+    private double energia;
+    private static final Random random = new Random();
 
     public Animales(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double velocidadMovimiento, double energia) {
         super(posX, posY, salud, edad, estadoReproductivo);
@@ -13,38 +15,48 @@ public class Animales extends Organismo {
 
     @Override
     public void mover() {
-        Random random = new Random();
-        posX += random.nextInt(3) - 1; // Mueve el animal en dirección X aleatoriamente
-        posY += random.nextInt(3) - 1; // Mueve el animal en dirección Y aleatoriamente
-        energia -= 1; // Consumo de energía por movimiento
+        if (!estaVivo()) return;
+        posX += random.nextInt(3) - 1;
+        posY += random.nextInt(3) - 1;
+        consumirEnergia(1);
     }
 
     @Override
-    public void reproducirse(Organismo pareja) {
-        if (pareja instanceof Animales && estadoReproductivo && pareja.estadoReproductivo && energia > 50) {
-            // Aquí se puede desarrollar una lógica más compleja para la creación de un nuevo animal
-        }
+    public Animales reproducirse() {
+        if (!estaVivo() || this.energia <= 50) return null;
+        consumirEnergia(20);
+        return new Animales(posX, posY, 100, 0, true, velocidadMovimiento, 50);
     }
 
     @Override
     public void envejecer() {
+        if (!estaVivo()) return;
         edad++;
-        salud -= 0.05; // Disminución de salud con la edad
-        if (salud <= 0) {
-            // Implementar lógica de muerte, como remover el animal del ecosistema
-        }
+        salud -= 0.05;
+        if (salud <= 0) marcarComoMuerto();
     }
 
     public void comer(double cantidad) {
+        if (!estaVivo()) return;
         energia += cantidad;
-        if (energia > 100) energia = 100; // Límite máximo de energía
+        if (energia > 100) energia = 100;
     }
 
-    public double getVelocidadMovimiento() { return velocidadMovimiento; }
-    public void setVelocidadMovimiento(double velocidadMovimiento) { this.velocidadMovimiento = velocidadMovimiento; }
+    private void consumirEnergia(double cantidad) {
+        energia -= cantidad;
+        if (energia <= 0) {
+            energia = 0;
+            marcarComoMuerto();
+        }
+    }
 
-    public double getEnergia() { return energia; }
-    public void setEnergia(double energia) { this.energia = energia; }
+    // Método para visualizar información básica del animal
+    public void visualizar() {
+        System.out.println("Animal - Posición: (" + posX + "," + posY + "), Salud: " + salud + ", Edad: " + edad + ", Energía: " + energia);
+    }
+
+    // Getters y Setters omitidos para brevedad
 }
+
 
 

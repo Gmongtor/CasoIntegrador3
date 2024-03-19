@@ -8,6 +8,7 @@ import Entidades.Simulador;
 
 
 
+
 private static void mostrarOrganismosPorTipo(String tipo) {
     // Simulación de obtener listas de animales y plantas
     List<Animales> animales = simulador.getAnimales(); // Asume que esta función existe

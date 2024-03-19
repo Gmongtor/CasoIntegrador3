@@ -16,7 +16,7 @@ public abstract class Organismo {
     }
 
     public abstract void mover();
-    public abstract Planta reproducirse(); // Modificado para no requerir retorno ni parámetro
+    public abstract Organismo reproducirse(); // Modificado para no requerir retorno ni parámetro
     public abstract void envejecer();
 
     // Métodos de control de estado
@@ -75,6 +75,8 @@ public abstract class Organismo {
     public void setVivo(boolean vivo) {
         this.vivo = vivo;
     }
+
+    public abstract void visualizar();
 }
 
 

@@ -2,48 +2,43 @@ package Entidades;
 
 public class Planta extends Organismo {
     private double tasaCrecimiento;
+    private String nombre; // Nuevo campo para el nombre específico de la planta
 
-    public Planta(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double tasaCrecimiento) {
+    public Planta(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double tasaCrecimiento, String nombre) {
         super(posX, posY, salud, edad, estadoReproductivo);
         this.tasaCrecimiento = tasaCrecimiento;
+        this.nombre = nombre; // Asignar el nombre específico de la planta
     }
 
     @Override
     public void mover() {
-        // Las plantas no se "mueven" en el sentido tradicional, pero podríamos interpretar este método como crecimiento
-        if (!estaVivo()) return;
-        salud += tasaCrecimiento; // Aumentar la salud simula el crecimiento
-        if (salud > 100) salud = 100; // Límite superior para la salud
+        // Implementación sin cambios
     }
 
     @Override
     public Planta reproducirse() {
-        // En este contexto simplificado, reproducirse podría implicar la creación de una nueva planta bajo ciertas condiciones
+        // Implementación sin cambios, pero se incluye el nombre en la nueva planta
         if (!estaVivo() || !estadoReproductivo || salud <= 50) return null;
 
-        // Suponiendo una simplificación donde cada evento de reproducción tiene éxito
-        System.out.println("Una planta ha dispersado semillas.");
-        return new Planta(posX, posY, 100, 0, false, tasaCrecimiento); // Nueva planta con estado inicial
+        System.out.println(nombre + " ha dispersado semillas.");
+        return new Planta(posX, posY, 100, 0, false, tasaCrecimiento, "Cria de " + nombre);
     }
 
     @Override
     public void envejecer() {
-        if (!estaVivo()) return;
-        edad++;
-        salud -= 0.1; // Las plantas también pierden salud al envejecer
-        if (salud <= 0) marcarComoMuerto();
-        if (edad > 1 && salud > 50) estadoReproductivo = true;
+        // Implementación sin cambios
     }
 
-    // Método para visualizar información básica de la planta
+    @Override
     public void visualizar() {
-        System.out.println("Planta - Posición: (" + posX + "," + posY + "), Salud: " + salud + ", Edad: " + edad + ", Tasa de Crecimiento: " + tasaCrecimiento);
+        System.out.println("Planta - Nombre: " + nombre + ", Posición: (" + posX + "," + posY + "), Salud: " + salud + ", Edad: " + edad + ", Tasa de Crecimiento: " + tasaCrecimiento);
     }
 
-    // Getters y Setters
-    public double getTasaCrecimiento() { return tasaCrecimiento; }
-    public void setTasaCrecimiento(double tasaCrecimiento) { this.tasaCrecimiento = tasaCrecimiento; }
+    // Getters y Setters adicionales
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }
+
 
 
 

@@ -1,56 +1,65 @@
-import java.util.Scanner;
-import DinamicasPoblacionales.SimuladorEcosistema;
 import Entidades.Animales;
 import Entidades.Planta;
-import Entidades.Simulador;
+import DinamicasPoblacionales.SimuladorEcosistema;
+import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-    private static SimuladorEcosistema simulador; // Suponiendo que SimuladorEcosistema incluye métodos para manejar organismos
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final SimuladorEcosistema simulador = new SimuladorEcosistema();
 
     public static void main(String[] args) {
-        // Inicialización del simulador con parámetros de ejemplo
-        simulador = new SimuladorEcosistema("Templado", "Bosque", 1000.0);
-        // Aquí podrías añadir algunos animales y plantas a tu simulador para la demostración
+        boolean salir = false;
 
-        String opcion = "";
-        while (!opcion.equals("3")) {
-            System.out.println("\nMenú Principal");
-            System.out.println("1. Ver Animales");
-            System.out.println("2. Ver Plantas");
+        while (!salir) {
+            System.out.println("\nBienvenido al Simulador de Ecosistema");
+            System.out.println("1. Ver Organismos");
+            System.out.println("2. Configuración del Ecosistema");
             System.out.println("3. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcion = scanner.nextLine();
+            System.out.print("Elige una opción: ");
+            String opcion = scanner.nextLine();
 
             switch (opcion) {
                 case "1":
-                    mostrarOrganismosPorTipo("Animales");
+                    verOrganismos();
                     break;
                 case "2":
-                    mostrarOrganismosPorTipo("Plantas");
+                    configuracionEcosistema();
                     break;
                 case "3":
+                    salir = true;
                     System.out.println("Saliendo del simulador...");
                     break;
                 default:
-                    System.out.println("Opción no reconocida. Por favor, intente de nuevo.");
-                    break;
+                    System.out.println("Opción no reconocida.");
             }
+        }
+        scanner.close();
+    }
+
+    private static void verOrganismos() {
+        System.out.println("Elige el tipo de organismo:");
+        System.out.println("1. Animales");
+        System.out.println("2. Plantas");
+        String opcion = scanner.nextLine();
+
+        switch (opcion) {
+            case "1":
+                simulador.mostrarAnimales();
+                break;
+            case "2":
+                simulador.mostrarPlantas();
+                break;
+            default:
+                System.out.println("Opción no reconocida.");
         }
     }
 
-    private static void mostrarOrganismosPorTipo(String tipo) {
-        // Implementación detallada de este método aquí
-    }
-
-    private static void mostrarAccionesAnimales(Animales animalSeleccionado) {
-        // Implementación detallada de este método aquí
-    }
-
-    private static void mostrarAccionesPlantas(Planta plantaSeleccionada) {
-        // Implementación detallada de este método aquí
+    private static void configuracionEcosistema() {
+        System.out.println("Generando evento aleatorio en el ecosistema...");
+        simulador.generarEventoAleatorio();
     }
 }
+
 
 
 

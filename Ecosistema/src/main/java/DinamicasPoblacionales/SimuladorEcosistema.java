@@ -1,20 +1,31 @@
 package DinamicasPoblacionales;
 
+import Entidades.Animales;
 import Entidades.Ambiente;
 import Entidades.Organismo;
+import Entidades.Planta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SimuladorEcosistema {
     private Ambiente ambiente;
     private List<Organismo> organismos;
     private int diaActual;
+    private static final Random random = new Random();
 
-    public SimuladorEcosistema(Ambiente ambiente) {
-        this.ambiente = ambiente;
+    public SimuladorEcosistema() {
+        this.ambiente = new Ambiente("Templado", "Bosque", 1000);
         this.organismos = new ArrayList<>();
         this.diaActual = 0;
+        // Asumimos que se agregan algunos organismos de muestra al iniciar
+        inicializarEcosistema();
+    }
+
+    private void inicializarEcosistema() {
+        agregarOrganismo(new Animales(10, 10, 100, 5, true, 8, 100, "León"));
+        agregarOrganismo(new Planta(5, 5, 100, 1, true, 1.5));
     }
 
     public void agregarOrganismo(Organismo organismo) {
@@ -26,28 +37,49 @@ public class SimuladorEcosistema {
     }
 
     public void ejecutarSimulacion(int numeroDeDias) {
-        if (numeroDeDias < 1) {
-            System.err.println("El número de días para la simulación debe ser positivo.");
-            return;
-        }
         for (int i = 0; i < numeroDeDias; i++) {
-            System.out.println("Día " + (diaActual + 1) + ":");
-            try {
-                ejecutarPasoDiario();
-            } catch (Exception e) {
-                System.err.println("Error durante la ejecución del día " + (diaActual + 1) + ": " + e.getMessage());
-            }
+            System.out.println("Día " + (diaActual + 1) + " de la simulación.");
+            ejecutarPasoDiario();
             diaActual++;
         }
     }
 
     private void ejecutarPasoDiario() {
-        // Aquí se incluiría la lógica para actualizar el estado de cada organismo y del ambiente
-        // Por ejemplo, se podrían aplicar efectos de eventos aleatorios, procesos de envejecimiento, reproducción, etc.
+        // Lógica simplificada para la demostración
+        organismos.forEach(Organismo::envejecer);
+        // Añadir más lógica para mover, reproducirse, etc.
     }
 
-    // Métodos adicionales como getAnimales(), getPlantas(), y mostrarEstadisticas() se definen aquí
+    public void mostrarAnimales() {
+        System.out.println("Animales en el ecosistema:");
+        organismos.stream().filter(o -> o instanceof Animales)
+                .forEach(o -> ((Animales)o).visualizar());
+    }
+
+    public void mostrarPlantas() {
+        System.out.println("Plantas en el ecosistema:");
+        organismos.stream().filter(o -> o instanceof Planta)
+                .forEach(o -> ((Planta)o).visualizar());
+    }
+
+    public void generarEventoAleatorio() {
+        int evento = random.nextInt(3); // Ejemplo de eventos
+        switch (evento) {
+            case 0:
+                System.out.println("No ocurre nada especial.");
+                break;
+            case 1:
+                System.out.println("Lluvia nutre el ecosistema.");
+                // Implementar efectos de la lluvia
+                break;
+            case 2:
+                System.out.println("Sequía afecta el ecosistema.");
+                // Implementar efectos de la sequía
+                break;
+        }
+    }
 }
+
 
 
 

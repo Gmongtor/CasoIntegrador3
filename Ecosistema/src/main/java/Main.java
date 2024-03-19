@@ -1,64 +1,85 @@
+package DinamicasPoblacionales;
+
 import Entidades.Animales;
+import Entidades.Ambiente;
+import Entidades.Organismo;
 import Entidades.Planta;
-import DinamicasPoblacionales.SimuladorEcosistema;
-import java.util.Scanner;
 
-public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final SimuladorEcosistema simulador = new SimuladorEcosistema();
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-    public static void main(String[] args) {
-        boolean salir = false;
+public class SimuladorEcosistema {
+    private Ambiente ambiente;
+    private List<Organismo> organismos;
+    private int diaActual;
+    private static final Random random = new Random();
 
-        while (!salir) {
-            System.out.println("\nBienvenido al Simulador de Ecosistema");
-            System.out.println("1. Ver Organismos");
-            System.out.println("2. Configuración del Ecosistema");
-            System.out.println("3. Salir");
-            System.out.print("Elige una opción: ");
-            String opcion = scanner.nextLine();
-
-            switch (opcion) {
-                case "1":
-                    verOrganismos();
-                    break;
-                case "2":
-                    configuracionEcosistema();
-                    break;
-                case "3":
-                    salir = true;
-                    System.out.println("Saliendo del simulador...");
-                    break;
-                default:
-                    System.out.println("Opción no reconocida.");
-            }
-        }
-        scanner.close();
+    public SimuladorEcosistema() {
+        this.ambiente = new Ambiente("Templado", "Bosque", 1000);
+        this.organismos = new ArrayList<>();
+        this.diaActual = 0;
+        // Asumimos que se agregan algunos organismos de muestra al iniciar
+        inicializarEcosistema();
     }
 
-    private static void verOrganismos() {
-        System.out.println("Elige el tipo de organismo:");
-        System.out.println("1. Animales");
-        System.out.println("2. Plantas");
-        String opcion = scanner.nextLine();
+    private void inicializarEcosistema() {
+        agregarOrganismo(new Animales(10, 10, 100, 5, true, 8, 100, "León"));
+        agregarOrganismo(new Planta(5, 5, 100, 1, true, 1.5));
+    }
 
-        switch (opcion) {
-            case "1":
-                simulador.mostrarAnimales();
-                break;
-            case "2":
-                simulador.mostrarPlantas();
-                break;
-            default:
-                System.out.println("Opción no reconocida.");
+    public void agregarOrganismo(Organismo organismo) {
+        if (organismo != null) {
+            this.organismos.add(organismo);
+        } else {
+            System.err.println("Intento de agregar un organismo nulo al ecosistema.");
         }
     }
 
-    private static void configuracionEcosistema() {
-        System.out.println("Generando evento aleatorio en el ecosistema...");
-        simulador.generarEventoAleatorio();
+    public void ejecutarSimulacion(int numeroDeDias) {
+        for (int i = 0; i < numeroDeDias; i++) {
+            System.out.println("Día " + (diaActual + 1) + " de la simulación.");
+            ejecutarPasoDiario();
+            diaActual++;
+        }
+    }
+
+    private void ejecutarPasoDiario() {
+        // Lógica simplificada para la demostración
+        organismos.forEach(Organismo::envejecer);
+        // Añadir más lógica para mover, reproducirse, etc.
+    }
+
+    public void mostrarAnimales() {
+        System.out.println("Animales en el ecosistema:");
+        organismos.stream().filter(o -> o instanceof Animales)
+                .forEach(o -> ((Animales)o).visualizar());
+    }
+
+    public void mostrarPlantas() {
+        System.out.println("Plantas en el ecosistema:");
+        organismos.stream().filter(o -> o instanceof Planta)
+                .forEach(o -> ((Planta)o).visualizar());
+    }
+
+    public void generarEventoAleatorio() {
+        int evento = random.nextInt(3); // Ejemplo de eventos
+        switch (evento) {
+            case 0:
+                System.out.println("No ocurre nada especial.");
+                break;
+            case 1:
+                System.out.println("Lluvia nutre el ecosistema.");
+                // Implementar efectos de la lluvia
+                break;
+            case 2:
+                System.out.println("Sequía afecta el ecosistema.");
+                // Implementar efectos de la sequía
+                break;
+        }
     }
 }
+
 
 
 

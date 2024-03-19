@@ -1,4 +1,5 @@
 package Entidades;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,38 +25,61 @@ public class Ambiente {
 
     public void actualizarClima(String nuevoClima) {
         this.clima = nuevoClima;
-        // Implementación de ajustes de factores ambientales según el clima puede variar.
+        // Aquí podrías ajustar los factores ambientales según el nuevo clima, si es necesario.
     }
 
     public void simularEvento(String evento) {
-        switch (evento) {
+        switch (evento.toLowerCase()) {
             case "lluvia":
-                factoresAmbientales.put("humedad", factoresAmbientales.get("humedad") + 20);
-                recursosDisponibles += 50;
+                ajustarPorLluvia();
                 break;
             case "sequía":
-                factoresAmbientales.put("humedad", Math.max(0, factoresAmbientales.get("humedad") - 30));
-                recursosDisponibles -= 50;
+                ajustarPorSequia();
                 break;
             case "incendio":
-                factoresAmbientales.put("temperatura", factoresAmbientales.get("temperatura") + 10);
-                factoresAmbientales.put("nutrientes", factoresAmbientales.get("nutrientes") - 40);
-                // Los incendios reducen significativamente los nutrientes disponibles
+                ajustarPorIncendio();
                 break;
             case "inundación":
-                factoresAmbientales.put("humedad", 100.0); // La humedad alcanza su máximo
-                recursosDisponibles += 100; // Aumento significativo en recursos hídricos
-                factoresAmbientales.put("nutrientes", factoresAmbientales.get("nutrientes") + 20); // Las inundaciones pueden aportar nutrientes
+                ajustarPorInundacion();
                 break;
             case "cambio estacional":
-                // Suponiendo un cambio hacia una estación más fría como ejemplo
-                factoresAmbientales.put("temperatura", factoresAmbientales.get("temperatura") - 10);
-                // Ajustes específicos para otros factores podrían agregarse aquí
+                ajustarPorCambioEstacional();
                 break;
             default:
-                System.out.println("Evento no reconocido.");
+                System.out.println("Evento no reconocido: " + evento);
                 break;
         }
+    }
+
+    private void ajustarPorLluvia() {
+        factoresAmbientales.put("humedad", factoresAmbientales.get("humedad") + 20);
+        recursosDisponibles += 50;
+        System.out.println("El evento de lluvia aumenta la humedad y los recursos hídricos disponibles.");
+    }
+
+    private void ajustarPorSequia() {
+        factoresAmbientales.put("humedad", Math.max(0, factoresAmbientales.get("humedad") - 30));
+        recursosDisponibles -= 50;
+        System.out.println("El evento de sequía reduce la humedad y los recursos hídricos disponibles.");
+    }
+
+    private void ajustarPorIncendio() {
+        factoresAmbientales.put("temperatura", factoresAmbientales.get("temperatura") + 10);
+        factoresAmbientales.put("nutrientes", Math.max(0, factoresAmbientales.get("nutrientes") - 40));
+        System.out.println("El evento de incendio aumenta la temperatura y reduce los nutrientes disponibles.");
+    }
+
+    private void ajustarPorInundacion() {
+        factoresAmbientales.put("humedad", 100.0);
+        recursosDisponibles += 100;
+        factoresAmbientales.put("nutrientes", factoresAmbientales.get("nutrientes") + 20);
+        System.out.println("El evento de inundación maximiza la humedad y aumenta los recursos hídricos y nutrientes disponibles.");
+    }
+
+    private void ajustarPorCambioEstacional() {
+        // Este método se mantiene intencionalmente simple para el ejemplo.
+        factoresAmbientales.put("temperatura", factoresAmbientales.get("temperatura") - 10);
+        System.out.println("El evento de cambio estacional ajusta la temperatura.");
     }
 
     // Getters y setters
@@ -87,9 +111,11 @@ public class Ambiente {
         return factoresAmbientales;
     }
 
-    public void setFactoresAmbientales(Map<String, Double> factoresAmbientales) {
+    public void setFactoresAmbientales(Map<String, Double> factoresAmbientales
+    ) {
         this.factoresAmbientales = factoresAmbientales;
     }
 }
+
 
 

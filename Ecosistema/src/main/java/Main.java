@@ -4,8 +4,6 @@ import Entidades.Animales;
 import Entidades.Planta;
 import SeguridadSistema.GestorAutentificacion;
 
-
-
 public class Main {
     public static void main(String[] args) {
         try {
@@ -19,24 +17,28 @@ public class Main {
                 System.out.println("Inicio de sesión exitoso para admin.");
             } else {
                 System.out.println("Inicio de sesión fallido para admin.");
+                // Si la autenticación falla, terminar ejecución
+                return;
             }
 
-            // Creación del ambiente
+            // Creación del ambiente y del simulador
             Ambiente ambiente = new Ambiente("Templado", "Bosque", 1000);
-
-            // Crear simulador
             SimuladorEcosistema simulador = new SimuladorEcosistema(ambiente);
 
-            // Agregar algunos organismos
-            simulador.agregarOrganismo(new Animales(0, 0, 100, 1, true, 5, 100)); // Ejemplo, asumiendo que tienes un constructor adecuado
-            simulador.agregarOrganismo(new Planta(5, 5, 100, 0, true, 2)); // Ejemplo, asumiendo que tienes un constructor adecuado
+            // Agregar algunos organismos al simulador
+            simulador.agregarOrganismo(new Animales(0, 0, 100, 1, true, 5, 100));
+            simulador.agregarOrganismo(new Planta(5, 5, 100, 0, true, 2));
 
-            // Ejecutar simulación
-            simulador.ejecutarSimulacion(10); // Simular 10 pasos
+            // Ejecutar la simulación para un número definido de pasos
+            System.out.println("Iniciando simulación del ecosistema...");
+            simulador.ejecutarSimulacion(10);
+            System.out.println("Simulación completada.");
 
         } catch (Exception e) {
+            System.err.println("Ocurrió un error durante la simulación:");
             e.printStackTrace();
         }
     }
 }
+
 

@@ -5,12 +5,14 @@ import java.util.Random;
 public class Animales extends Organismo {
     private double velocidadMovimiento;
     private double energia;
+    private String tipo; // Tipo de animal (e.g., "León", "Tigre", "Elefante")
     private static final Random random = new Random();
 
-    public Animales(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double velocidadMovimiento, double energia) {
+    public Animales(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double velocidadMovimiento, double energia, String tipo) {
         super(posX, posY, salud, edad, estadoReproductivo);
-        this.velocidadMovimiento = velocidadMovimiento;
-        this.energia = energia;
+        this.velocidadMovimiento = Math.max(velocidadMovimiento, 0);
+        this.energia = Math.max(energia, 0);
+        this.tipo = tipo;
     }
 
     @Override
@@ -22,10 +24,12 @@ public class Animales extends Organismo {
     }
 
     @Override
-    public Animales reproducirse() {
+    public Organismo reproducirse() {
         if (!estaVivo() || this.energia <= 50) return null;
         consumirEnergia(20);
-        return new Animales(posX, posY, 100, 0, true, velocidadMovimiento, 50);
+        // Asumiendo que todos los animales tienen una probabilidad de reproducción
+        System.out.println(this.tipo + " ha tenido una cría.");
+        return new Animales(posX, posY, 100, 0, true, velocidadMovimiento, 50, tipo);
     }
 
     @Override
@@ -50,13 +54,22 @@ public class Animales extends Organismo {
         }
     }
 
-    // Método para visualizar información básica del animal
+    // Método para visualizar información básica del animal, incluido su tipo
     public void visualizar() {
-        System.out.println("Animal - Posición: (" + posX + "," + posY + "), Salud: " + salud + ", Edad: " + edad + ", Energía: " + energia);
+        System.out.println("Tipo: " + tipo + " - Posición: (" + posX + "," + posY + "), Salud: " + salud + ", Edad: " + edad + ", Energía: " + energia);
     }
 
-    // Getters y Setters omitidos para brevedad
+    // Getters y Setters
+    public double getVelocidadMovimiento() { return velocidadMovimiento; }
+    public void setVelocidadMovimiento(double velocidadMovimiento) { this.velocidadMovimiento = Math.max(velocidadMovimiento, 0); }
+
+    public double getEnergia() { return energia; }
+    public void setEnergia(double energia) { this.energia = Math.max(energia, 0); }
+
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 }
+
 
 
 

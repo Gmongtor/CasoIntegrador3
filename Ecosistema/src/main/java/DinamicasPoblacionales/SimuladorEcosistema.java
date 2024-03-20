@@ -50,10 +50,28 @@ public class SimuladorEcosistema {
     }
 
     private void ejecutarPasoDiario() {
-        // Lógica simplificada para la demostración
-        organismos.forEach(Organismo::envejecer);
-        // Añadir más lógica para mover, reproducirse, etc.
+        // Simular movimientos
+        organismos.forEach(Organismo::mover);
+
+        // Simular eventos de reproducción
+        List<Organismo> nuevosOrganismos = new ArrayList<>();
+        organismos.forEach(organismo -> {
+            Organismo nuevo = organismo.reproducirse();
+            if (nuevo != null) {
+                nuevosOrganismos.add(nuevo);
+            }
+        });
+        organismos.addAll(nuevosOrganismos);
+
+        // Simular efectos de eventos aleatorios diarios
+        generarEventoAleatorio();
+
+        // Remover organismos muertos
+        organismos.removeIf(o -> !o.estaVivo());
+
+        // Añadir más lógica conforme se necesite
     }
+
 
     public void mostrarAnimales() {
         System.out.println("Animales en el ecosistema:");
@@ -66,20 +84,20 @@ public class SimuladorEcosistema {
         organismos.stream().filter(o -> o instanceof Planta)
                 .forEach(o -> ((Planta)o).visualizar());
     }
-
     public void generarEventoAleatorio() {
-        int evento = random.nextInt(3); // Ejemplo de eventos
+        int evento = random.nextInt(3);
         switch (evento) {
             case 0:
                 System.out.println("No ocurre nada especial.");
                 break;
             case 1:
                 System.out.println("Lluvia nutre el ecosistema.");
-                // Implementar efectos de la lluvia
+                organismos.stream().filter(o -> o instanceof Planta)
+                        .forEach(o -> o.incrementarSalud(10)); // Suponiendo que este método existe
                 break;
             case 2:
                 System.out.println("Sequía afecta el ecosistema.");
-                // Implementar efectos de la sequía
+                organismos.forEach(o -> o.decrementarSalud(10)); // Suponiendo que este método existe
                 break;
         }
     }

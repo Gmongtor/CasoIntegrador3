@@ -1,76 +1,53 @@
-import java.util.Scanner;
-import Entidades.Ambiente;
-import Entidades.Animales;
-import Entidades.Planta;
 import DinamicasPoblacionales.SimuladorEcosistema;
-import DinamicasPoblacionales.EstadisticasEcosistema;
-import DinamicasPoblacionales.EventoAleatorio;
-import SeguridadSistema.RegistroActividades;
 
+import java.util.Scanner;
 
-public class Main {
+public class
+Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        final String contrasenaCorrecta = "1234"; // Contraseña simplificada para el ejemplo
+        SimuladorEcosistema simulador = new SimuladorEcosistema(); // Asume que esta clase puede manejar la simulación
 
-        System.out.println("Por favor, ingresa la contraseña para acceder a la simulación del ecosistema:");
-        String contrasenaIngresada = scanner.nextLine();
+        while (true) {
+            System.out.println("\nMenú de Simulación de Ecosistema:");
+            System.out.println("1. Iniciar Simulación");
+            System.out.println("2. Visualizar Organismos");
+            System.out.println("3. Simular Desastres Naturales");
+            System.out.println("4. Salir");
+            System.out.print("Selecciona una opción: ");
 
-        if (!contrasenaIngresada.equals(contrasenaCorrecta)) {
-            System.out.println("Contraseña incorrecta. Acceso denegado.");
-            return; // Termina el programa si la contraseña es incorrecta
-        }
-        // Inicializar el ambiente y los organismos
-        Ambiente ambiente = new Ambiente("Templado", "Bosque", 1000);
-        // Ejemplos de animales y plantas
-        // Añadir aquí los ejemplos adicionales
+            String eleccion = scanner.nextLine();
 
-        System.out.println("¿Qué deseas visualizar? [animales, plantas, desastres]:");
-        String seleccion = scanner.nextLine();
-
-        switch (seleccion.toLowerCase()) {
-            case "animales":
-                // Simular y mostrar animales
-                break;
-            case "plantas":
-                // Simular y mostrar plantas
-                break;
-            case "desastres":
-                // Permitir al usuario desencadenar un desastre natural
-                System.out.println("Introduce el desastre a simular [lluvia, sequía, incendio, inundación, cambio estacional]:");
-                String desastre = scanner.nextLine();
-                ambiente.simularEvento(desastre);
-                break;
-            default:
-                System.out.println("Selección no válida.");
-                break;
-        }
-        // Inicializar el ambiente y los organismos
-        Ambiente ambiente = new Ambiente("Templado", "Bosque", 1000);
-        // Ejemplos de animales y plantas
-        // Añadir aquí los ejemplos adicionales
-
-        System.out.println("¿Qué deseas visualizar? [animales, plantas, desastres]:");
-        String seleccion = scanner.nextLine();
-
-        switch (seleccion.toLowerCase()) {
-            case "animales":
-                // Simular y mostrar animales
-                break;
-            case "plantas":
-                // Simular y mostrar plantas
-                break;
-            case "desastres":
-                // Permitir al usuario desencadenar un desastre natural
-                System.out.println("Introduce el desastre a simular [lluvia, sequía, incendio, inundación, cambio estacional]:");
-                String desastre = scanner.nextLine();
-                ambiente.simularEvento(desastre);
-                break;
-            default:
-                System.out.println("Selección no válida.");
-                break;
+            switch (eleccion) {
+                case "1":
+                    System.out.println("Iniciando Simulación...");
+                    simulador.ejecutarSimulacion(10); // Ejemplo de ejecución por 10 días
+                    break;
+                case "2":
+                    System.out.println("Visualizando Organismos...");
+                    simulador.mostrarAnimales();
+                    simulador.mostrarPlantas();
+                    break;
+                case "3":
+                    System.out.println("Simulando Desastres Naturales...");
+                    simulador.generarEventoAleatorio(); // Asume que esta funcionalidad está implementada
+                    break;
+                case "4":
+                    System.out.println("Saliendo de la Simulación.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Selección no válida. Por favor, intenta de nuevo.");
+                    break;
+            }
         }
     }
 }
 
-        // Continuar con el resto de la simulación si la contraseña es correcta
+
+
+
+
+
+
+

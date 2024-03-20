@@ -77,6 +77,14 @@ public abstract class Organismo {
     }
 
     public abstract void visualizar();
+
+    public void decrementarSalud(int i) {
+        salud -= i;
+    }
+
+    public void incrementarSalud(int i) {
+        salud += i;
+    }
 }
 
 

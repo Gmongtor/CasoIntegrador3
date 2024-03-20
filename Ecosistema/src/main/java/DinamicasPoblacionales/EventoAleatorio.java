@@ -11,74 +11,72 @@ public class EventoAleatorio {
     private static final Random random = new Random();
 
     public static void aplicarEvento(Ambiente ambiente, List<Organismo> organismos) {
-        int tipoEvento = random.nextInt(5);
+        int tipoEvento = random.nextInt(5); // Asegúrate de que el rango incluya todos los eventos que desees
 
         switch (tipoEvento) {
             case 0:
                 System.out.println("No ocurre ningún evento significativo.");
                 break;
             case 1:
-                cambiarClima(ambiente);
+                erupcionVolcanica(ambiente, organismos);
                 break;
             case 2:
-                desastreNatural(ambiente, organismos);
+                pandemia(organismos);
                 break;
             case 3:
-                broteEnfermedad(organismos);
+                inundacionMasiva(ambiente, organismos);
                 break;
             case 4:
-                eventoPositivo(ambiente, organismos);
+                invasionAlienigena(organismos);
                 break;
-                case 5:
-                impactoMeteorito(organismos);
-                break;
-            default:
-                System.out.println("No ocurre ningún evento significativo.");
-                break;
-
         }
     }
-    private static void impactoMeteorito(List<Organismo> organismos) {
-        double porcentajeReduccion = 0.5; // Supongamos que un meteorito elimina el 50% de la población
-        System.out.println("Un impacto de meteorito ha ocurrido, causando una masiva reducción de la población.");
 
-        int nuevosOrganismosSize = (int) (organismos.size() * (1 - porcentajeReduccion));
-        List<Organismo> sobrevivientes = random
-                .ints(0, organismos.size())
-                .distinct()
-                .limit(nuevosOrganismosSize)
-                .mapToObj(organismos::get)
-                .collect(Collectors.toList());
-
-        organismos.clear(); // Limpia la lista original
-        organismos.addAll(sobrevivientes); // Añade los organismos que sobreviven
-    }
-    private static void cambiarClima(Ambiente ambiente) {
-        // Ejemplo: Cambiar el clima aleatoriamente
-        String[] climas = {"Lluvioso", "Soleado", "Nublado", "Ventoso"};
-        String nuevoClima = climas[random.nextInt(climas.length)];
-        ambiente.setClima(nuevoClima);
-        System.out.println("El clima ha cambiado a: " + nuevoClima);
+    private static void erupcionVolcanica(Ambiente ambiente, List<Organismo> organismos) {
+        System.out.println("Una erupción volcánica ha ocurrido, destruyendo gran parte del hábitat.");
+        eliminarOrganismosAleatoriamente(organismos, 0.2);
     }
 
-    private static void desastreNatural(Ambiente ambiente, List<Organismo> organismos) {
-        // Simulación de un desastre natural que afecta la salud de los organismos
-        System.out.println("Ha ocurrido un desastre natural: incendio forestal.");
-        organismos.forEach(o -> o.setSalud(o.getSalud() - 20)); // Asume método setSalud
+    private static void pandemia(List<Organismo> organismos) {
+        System.out.println("Una pandemia ha afectado a la población, eliminando a muchos organismos.");
+        eliminarOrganismosAleatoriamente(organismos, 0.06);
     }
 
-    private static void broteEnfermedad(List<Organismo> organismos) {
-        // Simulación de un brote de enfermedad que reduce la salud
-        System.out.println("Un brote de enfermedad ha reducido la salud de los organismos.");
-        organismos.forEach(o -> o.setSalud(o.getSalud() * 0.9)); // Reduce la salud en un 10%
+    private static void inundacionMasiva(Ambiente ambiente, List<Organismo> organismos) {
+        System.out.println("Una inundación masiva ha sumergido el área, resultando en muchas pérdidas.");
+        eliminarOrganismosAleatoriamente(organismos, 0.2);
     }
 
-    private static void eventoPositivo(Ambiente ambiente, List<Organismo> organismos) {
-        System.out.println("Ha ocurrido un evento positivo: lluvias beneficiosas.");
-        ambiente.simularEvento("lluvia");
-        organismos.forEach(o -> o.setSalud(o.getSalud() + 10)); // Asume método setSalud
+    private static void invasionAlienigena(List<Organismo> organismos) {
+        System.out.println("Una invasión alienígena ha diezmado a la población.");
+        eliminarOrganismosAleatoriamente(organismos, 0.05);
     }
+
+    // Función para eliminar una porción de los organismos de manera aleatoria
+    private static void eliminarOrganismosAleatoriamente(List<Organismo> organismos, double porcentaje) {
+        if (!organismos.isEmpty()) {
+            int nuevosOrganismosSize = (int) (organismos.size() * (1 - porcentaje));
+            // Asegurar que nuevosOrganismosSize no sea negativo ni cero
+            nuevosOrganismosSize = Math.max(nuevosOrganismosSize, 1);
+
+            // Asegurarse de que nuevosOrganismosSize no sea mayor que el tamaño de la lista actual de organismos
+            nuevosOrganismosSize = Math.min(nuevosOrganismosSize, organismos.size() - 1);
+
+            List<Organismo> sobrevivientes = random.ints(0, organismos.size())
+                    .distinct()
+                    .limit(nuevosOrganismosSize)
+                    .mapToObj(organismos::get)
+                    .collect(Collectors.toList());
+
+            organismos.clear(); // Limpia la lista original
+            organismos.addAll(sobrevivientes); // Añade los organismos que sobreviven
+        } else {
+            System.out.println("No hay organismos para eliminar.");
+        }
+    }
+
 }
+
 
 
 

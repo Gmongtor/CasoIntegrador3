@@ -1,5 +1,8 @@
 package Entidades;
 
+import java.util.List;
+import java.util.Random;
+
 public abstract class Organismo {
     protected int posX, posY;
     protected double salud;
@@ -16,7 +19,6 @@ public abstract class Organismo {
     }
 
     public abstract void mover();
-    public abstract Organismo reproducirse(); // Modificado para no requerir retorno ni parámetro
     public abstract void envejecer();
 
     // Métodos de control de estado
@@ -84,6 +86,32 @@ public abstract class Organismo {
 
     public void incrementarSalud(int i) {
         salud += i;
+    }
+    public void cazar(List<Organismo> presas) {
+        if (!presas.isEmpty() && this.salud < 100) { // Ejemplo de condición
+            Random random = new Random();
+            Organismo presa = presas.get(random.nextInt(presas.size()));
+            // Suponiendo que decrementarSalud() quita salud a la presa y puede marcarla como no viva
+            presa.decrementarSalud(10); // Ejemplo de daño
+            this.incrementarSalud(10); // El depredador recupera salud
+            System.out.println(this.getClass().getSimpleName() + " ha cazado a " + presa.getClass().getSimpleName());
+        }
+    }
+
+    public boolean esPredador() {
+        return this instanceof Animales;
+    }
+    public Organismo reproducirse() {
+        // Añadir una condición de probabilidad para la reproducción
+        Random random = new Random();
+        if (random.nextDouble() < 0.1) { // Supongamos que hay un 10% de probabilidad de reproducción
+            // Lógica de reproducción existente
+        }
+        return null;
+    }
+
+    public Object getTipo() {
+        return this.getClass().getSimpleName();
     }
 }
 

@@ -1,32 +1,38 @@
 package Entidades;
 
+import java.util.Random;
+
 public class Planta extends Organismo {
     private double tasaCrecimiento;
     private String nombre; // Nuevo campo para el nombre específico de la planta
+    private static final Random random = new Random();
 
     public Planta(int posX, int posY, double salud, int edad, boolean estadoReproductivo, double tasaCrecimiento, String nombre) {
         super(posX, posY, salud, edad, estadoReproductivo);
         this.tasaCrecimiento = tasaCrecimiento;
-        this.nombre = nombre; // Asignar el nombre específico de la planta
+        this.nombre = nombre;
     }
 
     @Override
     public void mover() {
-        // Implementación sin cambios
+        // Las plantas generalmente no se mueven, por lo que este método podría quedar vacío o realizar alguna otra lógica específica si es necesario.
     }
 
     @Override
-    public Planta reproducirse() {
-        // Implementación sin cambios, pero se incluye el nombre en la nueva planta
-        if (!estaVivo() || !estadoReproductivo || salud <= 50) return null;
-
-        System.out.println(nombre + " ha dispersado semillas.");
-        return new Planta(posX, posY, 100, 0, false, tasaCrecimiento, "Cria de " + nombre);
+    public Organismo reproducirse() {
+        // Añade una probabilidad aleatoria para la reproducción.
+        double probabilidadReproduccion = 0.2; // Por ejemplo, un 20% de probabilidad
+        if (random.nextDouble() < probabilidadReproduccion && estaVivo() && estadoReproductivo && salud > 80) {
+            System.out.println(nombre + " ha dispersado semillas.");
+            return new Planta(posX, posY, 100, 0, false, tasaCrecimiento, "Brote de " + nombre);
+        }
+        return null;
     }
 
     @Override
     public void envejecer() {
-        // Implementación sin cambios
+        edad++;
+        // Aquí puedes implementar lógica adicional como decremento de salud con el tiempo si lo consideras necesario.
     }
 
     @Override
@@ -38,6 +44,7 @@ public class Planta extends Organismo {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 }
+
 
 
 
